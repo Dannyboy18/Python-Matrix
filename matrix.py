@@ -38,11 +38,29 @@ class Matrix(object):
 
         # return column
 
+    def __eq__(self, other_matrix):
+        return self.rows == other_matrix.rows
 
+    def add(self, other_matrix):
+        result_matrix_string = ""
+        result_row_strings = []
+        if (len(self.rows) != len(other_matrix.rows)):
+            raise Exception("Das geht nicht: Unterschiedlich viele Zeilen")
 
+        for i in range(len(self.rows)):
+            result_row = []
+            self_row = self.row(i+1)
+            other_row = other_matrix.row(i+1)
 
-
-
-# r = {1: [1, 2],
-#      2: [3, 4],
-#      3: [5, 6]}
+            if (len(self_row) != len(other_row)):
+                raise Exception("Das geht nicht: Unterschiedlich lange Zeilen")
+                
+            for j in range(len(self_row)):
+               result_string = str(self_row[j] + other_row[j])
+               result_row.append(result_string)
+            separator = " "
+            result_row_string = separator.join(result_row)
+            result_row_strings.append(result_row_string)
+        separator = "\n"
+        result_matrix_string = separator.join(result_row_strings)
+        return Matrix(result_matrix_string)    

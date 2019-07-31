@@ -38,6 +38,40 @@ class MatrixTest(unittest.TestCase):
         matrix = Matrix("89 1903 3\n18 3 1\n9 4 800")
         self.assertEqual(matrix.column(2), [1903, 3, 4])
 
+    def test_equal(self):
+        Matrix1 = Matrix("1 2\n3 4")
+        Matrix2 = Matrix("1 2\n3 4")
+        self.assertEqual(Matrix1,Matrix2)
+
+    def test_not_equal(self):
+        Matrix1 = Matrix("1 2\n3 4")
+        Matrix2 = Matrix("1 2\n3 5")
+        self.assertNotEqual(Matrix1, Matrix2)
+
+    def test_addition(self):
+        matrix1 = Matrix("1 2\n3 4")
+        matrix2 = Matrix("3 4\n5 6")
+        matrix_result = Matrix("4 6\n8 10")
+        self.assertEqual(matrix1.add(matrix2), matrix_result)
+
+    def test_addition_reversed(self):
+        matrix1 = Matrix("1 2\n3 4")
+        matrix2 = Matrix("3 4\n5 6")
+        matrix_result = Matrix("4 6\n8 10")
+        self.assertEqual(matrix2.add(matrix1), matrix_result)
+
+    def test_addition_with_different_row_length(self):
+        matrix1 = Matrix("1 2\n3 4")
+        matrix2 = Matrix("3 4 1\n5 6 1")
+        with self.assertRaises(Exception):
+            matrix1.add(matrix2)
+
+    def test_addition_with_different_row_count(self):
+        matrix1 = Matrix("1 2\n3 4")
+        matrix2 = Matrix("3 4\n5 6\n7 8")
+        with self.assertRaises(Exception):
+            matrix1.add(matrix2)
+
 
 if __name__ == '__main__':
     unittest.main()
