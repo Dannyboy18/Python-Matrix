@@ -42,6 +42,12 @@ class Matrix(object):
         return self.rows == other_matrix.rows
 
     def add(self, other_matrix):
+       return self.plus_oder_minus(other_matrix, "plus")  
+
+    def subtract(self, other_matrix):
+       return self.plus_oder_minus(other_matrix, "minus")
+
+    def plus_oder_minus(self, other_matrix, operation):
         result_matrix_string = ""
         result_row_strings = []
         if (len(self.rows) != len(other_matrix.rows)):
@@ -56,11 +62,57 @@ class Matrix(object):
                 raise Exception("Das geht nicht: Unterschiedlich lange Zeilen")
                 
             for j in range(len(self_row)):
-               result_string = str(self_row[j] + other_row[j])
-               result_row.append(result_string)
+               if (operation == 'plus'): 
+                  result_string = str(self_row[j] + other_row[j])
+               if (operation == 'minus'):
+                  result_string = str(self_row[j] - other_row[j])
+
+               result_row.append(result_string) 
             separator = " "
             result_row_string = separator.join(result_row)
             result_row_strings.append(result_row_string)
         separator = "\n"
         result_matrix_string = separator.join(result_row_strings)
-        return Matrix(result_matrix_string)    
+        return Matrix(result_matrix_string) 
+       
+    def multiplication(self, other_matrix):
+        ergebnis_matrix = ""
+        for z in self.rows:
+            ergebnis_zeile = ""
+            for s in other_matrix.columns:
+                summe = 0
+                for i in range(len(z)):
+                    summe = z[i] * s[i] + summe
+                ergebnis_zeile = ergebnis_zeile + str(summe) + " "                
+            ergebnis_matrix = ergebnis_matrix + ergebnis_zeile.rstrip() + "\n"
+        return Matrix(ergebnis_matrix.rstrip("\n"))
+                
+
+    #   rows_A = len(self.rows[0])
+    #   columns_A = len(self.columns[0])
+    #   #rows_B = len(other_matrix.row[0])
+    #   columns_B = len(other_matrix.columns[0])
+
+    # #   if columns_A[0] != rows_B[0]:
+    # #     print ("Matrizen koennen nicht multiziert werden. Falsche Demension")
+        
+    #     # return 
+    #   C = [[0 for row in range(columns_B)]for col in range(rows_A)]
+    #   print(C) 
+    
+    #   for i in range(rows_A):
+    #       for j in range(columns_B):
+    #           for k in range(columns_A):
+    #               C[i][j] += rows_A[i][k] * columns_B[k][j]
+    #   return  (C)    
+    
+    # ergebnis_matrix = ""
+    # fuer jede Zeile z von A:
+    #   ergebnis_zeile = ""
+    #   fuer jede spalte s von B:
+    #     summe = 0
+    #     fuer i=0 bis laenge von z:
+    #       summe = summe + z[i] * s[i]
+    #     ergebnis_zeile = ergebnis_zeile + str(summe) + " " 
+    #   ergebnis_matrix = ergebnis_zeile + "\n"
+    # print(ergebnis_matrix)

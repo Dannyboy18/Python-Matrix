@@ -72,6 +72,17 @@ class MatrixTest(unittest.TestCase):
         with self.assertRaises(Exception):
             matrix1.add(matrix2)
 
+    def test_subtraction(self):
+        matrix1 = Matrix("1 2\n3 4")
+        matrix2 = Matrix("3 4\n5 6")
+        matrix_result = Matrix("-2 -2\n-2 -2")
+        self.assertEqual(matrix1.subtract(matrix2), matrix_result)
+
+    def test_mult(self):
+        matrixA = Matrix("3 4 5\n2 1 3\n2 4 1")
+        matrixB = Matrix("1 2\n2 3\n2 3")
+        matrix_result = Matrix("21 33\n10 16\n12 19")
+        self.assertEqual(matrixA.multiplication(matrixB), matrix_result)    
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main() 
